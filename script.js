@@ -56,7 +56,6 @@ $(submitBtn).on('click', function () {
     .catch(function (error) { // runs if an error happens
       console.log('error:', error);
     });
-
 })
 
 //building the date text
@@ -76,5 +75,5 @@ function weatherCurrent(apiJson) {
 
 function weatherForecast(apiJson) {
   console.log('hello2')
-  $()
+  $('#forecast').attr('hidden', false)
 }

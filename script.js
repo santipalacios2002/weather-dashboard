@@ -40,7 +40,7 @@ $(submitBtn).on('click', function() {
     }
   }
 
-  var weatherUrl = `http://api.openweathermap.org/data/2.5/onecall?lat=${cityLonLat[0]}&lon=${cityLonLat[1]}&appid=0f6d8bac92fd58296cc45805a6e84234&units=imperial&exclude=minutely,hourly`;
+  var weatherUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${cityLonLat[0]}&lon=${cityLonLat[1]}&appid=0f6d8bac92fd58296cc45805a6e84234&units=imperial&exclude=minutely,hourly`;
   console.log(weatherUrl)
 
   $.ajax({

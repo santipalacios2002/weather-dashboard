@@ -68,6 +68,7 @@ function weatherForecast(apiJson) {
   console.log('hello')
   for (let index = 0; index < 6; index++) {
     $('.icon').eq(index).attr('src', `https://openweathermap.org/img/wn/${apiJson.daily[index].weather[0].icon}.png`);
+    $('.icon').eq(index).attr('alt', `weather icon`);
     $('.temp').eq(index).text(`${Math.round(apiJson.daily[index + 1].temp.max)}/${Math.round(apiJson.daily[index + 1].temp.min)} ℉`)
     $('.wind').eq(index).text(`${apiJson.daily[index + 1].wind_speed} MPH`)
     $('.humidity').eq(index).text(`${apiJson.daily[index + 1].humidity} %`)

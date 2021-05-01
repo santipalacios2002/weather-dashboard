@@ -60,20 +60,27 @@ $(submitBtn).on('click', function () {
 
 //building the date text
 for (let index = 0; index < 5; index++) {
-  $('.forecast').children().children('.date').eq(index).text(moment().add(index + 1, 'days').format('l'));
+  $('.forecast').children().children('.date').eq(index).text(moment().add(index + 1, 'days').format('dddd, l'));
 }
 
-
-function weatherCurrent(apiJson) {
-  console.log('hello')
-  for (let index = 0; index < 5; index++) {
-    $('.icon').eq(index).attr('src', `https://openweathermap.org/img/wn/${apiJson.daily[index + 1].weather[0].icon}@2x.png`);
-    $('.temp').eq(index).text(`${apiJson.daily[index + 1].temp.day}`)
-
-  }
-}
 
 function weatherForecast(apiJson) {
-  console.log('hello2')
+  console.log('hello')
+  for (let index = 0; index < 6; index++) {
+    $('.icon').eq(index).attr('src', `https://openweathermap.org/img/wn/${apiJson.daily[index].weather[0].icon}.png`);
+    $('.temp').eq(index).text(`${Math.round(apiJson.daily[index + 1].temp.max)}/${Math.round(apiJson.daily[index + 1].temp.min)} ℉`)
+    $('.wind').eq(index).text(`${apiJson.daily[index + 1].wind_speed} MPH`)
+    $('.humidity').eq(index).text(`${apiJson.daily[index + 1].humidity} %`)
+  }
   $('#forecast').attr('hidden', false)
+}
+
+function weatherCurrent(apiJson) {
+  console.log('hello2')
+  $('.dateAndCityCurrent').text(`${cityAndState} (${moment().format('dddd, l')})`)
+  $('.dateAndCityCurrent').append(`<img class="iconCurrent" src="https://openweathermap.org/img/wn/${apiJson.current.weather[0].icon}@2x.png" alt="current weather icon">`)
+  $('.tempCurrent').text(`${Math.round(apiJson.current.temp)} ℉`)
+  $('.windCurrent').text(`${Math.round(apiJson.current.wind_speed)} MPH`)
+  $('.humidityCurrent').text(`${Math.round(apiJson.current.humidity)} %`)
+  $('.uvIndexCurrent').text(`${Math.round(apiJson.current.uvi)}`)
 }

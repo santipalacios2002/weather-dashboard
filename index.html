@@ -17,59 +17,65 @@
   <header class="p-5 text-center text-white gradient-custom">
     <h1>Weather Dashboard</h1>
   </header>
-  <main class="container">
+  <main>
     <section class="d-flex row">
       <div id="search" class="col-md-3 mx-4 my-2 ui-widget border-bottom border-dark pb-3">
         <input id="tags" class="col my-3" placeholder="Enter city"></input>
         <button class="btn btn-primary col" id="searchBtn">Search</button>
       </div>
-      <div id="forecast" class="col-md-8 m-1 border border-dark" hidden>
-        <div class="row mx-1 bg-primary">
-          <p>Placeholder for current weather</p>
+      <div id="forecast" class="col-md-8 m-1" hidden>
+        <div class="row mx-1 border border-dark">
+          <div class="dateAndCityCurrent col-12">City, date <img class='iconCurrent' src="" alt="Girl in a jacket"></div>
+          <div>Temp: <span class="tempCurrent col-12"></span></div>
+          <div>Wind: <span class="windCurrent col-12"></span></div>
+          <div>Humidity: <span class="humidityCurrent col-12"></span></div>
+          <div>UV Index: <span class="uvIndexCurrent col-12"></span></div>
         </div>
-        <div class="row forecast m-3">
+        <div class="row forecast my-3">
           <h2 class="col-md-12"> 5-Day Forecast: </h2>
           <div class="col border border-dark mx-2">
             <div class="date">DATE</div>
             <img class='icon' src="https://openweathermap.org/img/wn/01d@2x.png" alt="Girl in a jacket">
             <div>Temp: <span class="temp"></span></div>
-            <div class="wind">Wind:</div>
-            <div class="humidity">Humidity:</div>
+            <div>Wind: <span class="wind"></span></div>
+            <div>Humidity: <span class="humidity"></span></div>
           </div>
-          <div class="col border border-dark mx-2">
+          <div class="col border border-dark mx-2 ">
             <div class="date">DATE</div>
             <img class='icon' src="" alt="Girl in a jacket">
             <div>Temp: <span class="temp"></span></div>
-            <div class="wind">Wind:</div>
-            <div class="humidity">Humidity:</div>
+            <div>Wind: <span class="wind"></span></div>
+            <div>Humidity: <span class="humidity"></span></div>
           </div>
           <div class="col border border-dark mx-2">
             <div class="date">DATE</div>
             <img class='icon' src="https://openweathermap.org/img/wn/01d@2x.png" alt="Girl in a jacket">
             <div>Temp: <span class="temp"></span></div>
-            <div class="wind">Wind:</div>
-            <div class="humidity">Humidity:</div>
+            <div>Wind: <span class="wind"></span></div>
+            <div>Humidity: <span class="humidity"></span></div>
           </div>
           <div class="col border border-dark mx-2">
             <div class="date">DATE</div>
             <img class='icon' src="https://openweathermap.org/img/wn/01d@2x.png" alt="Girl in a jacket">
             <div>Temp: <span class="temp"></span></div>
-            <div class="wind">Wind:</div>
-            <div class="humidity">Humidity:</div>
+            <div>Wind: <span class="wind"></span></div>
+            <div>Humidity: <span class="humidity"></span></div>
           </div>
           <div class="col border border-dark mx-2">
             <div class="date">DATE</div>
             <img class='icon' src="https://openweathermap.org/img/wn/01d@2x.png" alt="Girl in a jacket">
             <div>Temp: <span class="temp"></span></div>
-            <div class="wind">Wind:</div>
-            <div class="humidity">Humidity:</div>
+            <div>Wind: <span class="wind"></span></div>
+            <div>Humidity: <span class="humidity"></span></div>
           </div>
         </div>
       </div>
     </section>
 
   </main>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
+    integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
+    crossorigin="anonymous"></script>
   <script src="./script.js"></script>
 </body>
 

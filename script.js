@@ -5,7 +5,7 @@ var submitBtn = document.querySelector('#searchBtn');
 var cityEl = document.querySelector('#tags');
 var dateEl = document.querySelector('.date');
 var weatherJson = [];
-
+var cityStorage = [];
 
 //gets city json file of American cities
 $.getJSON('./city.list.json', function (data) {
@@ -56,9 +56,11 @@ $(submitBtn).on('click', function () {
     .catch(function (error) { // runs if an error happens
       console.log('error:', error);
     });
+    saveSearch($('#tags').val())
+
 })
 
-//building the date text
+//building the date text for forecast
 for (let index = 0; index < 5; index++) {
   $('.forecast').children().children('.date').eq(index).text(moment().add(index + 1, 'days').format('dddd, l'));
 }
@@ -85,3 +87,63 @@ function weatherCurrent(apiJson) {
   $('.humidityCurrent').text(`${Math.round(apiJson.current.humidity)} %`)
   $('.uvIndexCurrent').text(`${Math.round(apiJson.current.uvi)}`)
 }
+
+
+//use unshift to add new element at the beggining of the array
+//use pop to remove last eelement of the array
+var searchIndex = 7;
+function saveSearch(city) {
+  var citySearch = JSON.parse(localStorage.getItem('search'));
+  if (citySearch === null) {
+    cityStorage.unshift(city)
+    localStorage.setItem('search', JSON.stringify(cityStorage)) //save it to local storage
+  } else {
+    cityStorage = citySearch;
+    cityStorage.unshift(city)
+    localStorage.setItem('search', JSON.stringify(cityStorage)) //save it to local storage
+  }
+  
+  searchIndex++;
+}
+
+function searchBlock() {
+  var citySearch = JSON.parse(localStorage.getItem('search'));
+  if (citySearch === null) {
+    return
+  }
+  for (let index = 0; index < citySearch.length; index++) {    
+    $('#search').append(`<button class="btn btn-secondary col mb-2 searchBtn">${citySearch[index]}</button>`) 
+  }
+}
+
+searchBlock()
+
+$('.searchBtn').on('click', function (event) {
+  console.log(event.target.innerText)
+  var citySearched = event.target.innerText
+  cityAndState = citySearched.split(",")
+  console.log(cityAndState)
+  for (var i = 0; i < cityArrayWithLonLat.length; i++) {
+    if (cityAndState[0] === cityArrayWithLonLat[i].name && cityAndState[1].trim() === cityArrayWithLonLat[i].state) {
+      var cityLonLat = [cityArrayWithLonLat[i].lat, cityArrayWithLonLat[i].lon]
+      console.log(cityLonLat)
+    }
+  }
+
+  var weatherUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${cityLonLat[0]}&lon=${cityLonLat[1]}&appid=0f6d8bac92fd58296cc45805a6e84234&units=imperial&exclude=minutely,hourly`;
+
+  $.ajax({
+    url: weatherUrl,
+    method: 'GET',
+  })
+    .then(function (response) { // runs if no error happens
+      console.log('Ajax Reponse \n-------------');
+      console.log(response);
+      weatherJson = response;   //might get rid of it later, but this makes the json glabal and accessible
+      weatherCurrent(response);
+      weatherForecast(response);
+    })
+    .catch(function (error) { // runs if an error happens
+      console.log('error:', error);
+    });
+})

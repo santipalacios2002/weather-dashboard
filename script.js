@@ -62,7 +62,7 @@ $(submitBtn).on('click', function () {
 
 //building the date text for forecast
 for (let index = 0; index < 5; index++) {
-  $('.forecast').children().children('.date').eq(index).text(moment().add(index + 1, 'days').format('dddd, l'));
+  $('.date').eq(index).text(moment().add(index + 1, 'days').format('dddd, l'));
 }
 
 

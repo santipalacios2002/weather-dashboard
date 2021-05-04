@@ -61,6 +61,39 @@ $('#submitBtn').on('click', function () {
     });
     saveSearch($('#tags').val());
     $('.search-block').prepend(`<button class="btn btn-secondary col mb-2 searchBtn">${citySearched}</button>`)
+    
+    //added lines 66-94 so the buttons can be trigger without page refresh
+    //====================================================================
+    
+    $('.searchBtn').on('click', function (event) {
+      console.log(event.target.innerText)
+      var citySearched = event.target.innerText
+      cityAndState = citySearched.split(",")
+      console.log(cityAndState)
+      for (var i = 0; i < cityArrayWithLonLat.length; i++) {
+        if (cityAndState[0] === cityArrayWithLonLat[i].name && cityAndState[1].trim() === cityArrayWithLonLat[i].state) {
+          var cityLonLat = [cityArrayWithLonLat[i].lat, cityArrayWithLonLat[i].lon]
+          console.log(cityLonLat)
+        }
+      }
+      
+      var weatherUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${cityLonLat[0]}&lon=${cityLonLat[1]}&appid=0f6d8bac92fd58296cc45805a6e84234&units=imperial&exclude=minutely,hourly`;
+      
+      $.ajax({
+        url: weatherUrl,
+        method: 'GET',
+      })
+      .then(function (response) { // runs if no error happens
+        console.log('Ajax Reponse \n-------------');
+        console.log(response);
+        weatherJson = response;   //might get rid of it later, but this makes the json glabal and accessible
+        weatherCurrent(response);
+        weatherForecast(response);
+      })
+      .catch(function (error) { // runs if an error happens
+        console.log('error:', error);
+      });
+    })
 })
 
 

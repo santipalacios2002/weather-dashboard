@@ -12,3 +12,7 @@
   .forecast-bg {
     background-color: rgba(99, 140, 184);
   }
+
+  .border-custom {
+    border: 3px solid rgba(32, 9, 75)!important
+  }

@@ -91,10 +91,16 @@ function weatherCurrent(apiJson) {
   $('.humidityCurrent').text(`${Math.round(apiJson.current.humidity)} %`)
   $('.uvIndexCurrent').text(`${apiJson.current.uvi}`)
   if (apiJson.current.uvi < 3) {
+    $('.uvIndexCurrent').removeClass('bg-danger')
+    $('.uvIndexCurrent').removeClass('bg-warning')
     $('.uvIndexCurrent').addClass('bg-success text-white rounded px-2 py-1 fw-bold')
   } else if (apiJson.current.uvi < 6) {
+    $('.uvIndexCurrent').removeClass('bg-success')
+    $('.uvIndexCurrent').removeClass('bg-danger')
     $('.uvIndexCurrent').addClass('bg-warning text-white rounded px-2 py-1 fw-bold')
   } else {
+    $('.uvIndexCurrent').removeClass('bg-success')
+    $('.uvIndexCurrent').removeClass('bg-warning')
     $('.uvIndexCurrent').addClass('bg-danger text-white rounded px-2 py-1 fw-bold')
   }
 

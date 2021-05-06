@@ -4,10 +4,8 @@ var cityAndState = [];
 var submitBtn = document.querySelector('#searchBtn');
 var cityEl = document.querySelector('#tags');
 var dateEl = document.querySelector('.date');
-var weatherJson = [];
 var cityStorage = [];
 searchBlock();
-
 //gets city json file of American cities
 $.getJSON('./city.list.json', function (data) {
   for (var i = 0; i < data.length; i++) {
@@ -21,37 +19,29 @@ $.getJSON('./city.list.json', function (data) {
   }
 });
 
+//building the date text for forecast
+for (let index = 0; index < 5; index++) {
+  $('.date').eq(index).text(moment().add(index + 1, 'days').format('ddd, L'));
+}
+
+$('#submitBtn').on('click', function () {
+  var citySearched = $('#tags').val(); //extracts the value from search
+  apiCityCall(citySearched);
+  saveSearch($('#tags').val());
+  $('.search-block').prepend(`<button class="btn btn-secondary col mb-2 searchBtn">${citySearched}</button>`)
+
+  $('.searchBtn').on('click', function (event) {
+    var citySearched = event.target.innerText
+    apiCityCall(citySearched);
+  })
+})
+
 //jquery autocomplete widget
 $(function () {
   $("#tags").autocomplete({
     source: cityArrayTags
   });
 });
-
-
-$('#submitBtn').on('click', function () {
-  var citySearched = $('#tags').val(); //extracts the value from search
-  console.log('this is the city searched', citySearched)
-  apiCityCall(citySearched);
-  saveSearch($('#tags').val());
-  $('.search-block').prepend(`<button class="btn btn-secondary col mb-2 searchBtn">${citySearched}</button>`)
-
-  //added lines 66-94 so the buttons can be trigger without page refresh
-  //====================================================================
-
-  $('.searchBtn').on('click', function (event) {
-    console.log(event.target.innerText)
-    var citySearched = event.target.innerText
-    apiCityCall(citySearched);
-  })
-})
-
-
-//building the date text for forecast
-for (let index = 0; index < 5; index++) {
-  $('.date').eq(index).text(moment().add(index + 1, 'days').format('dddd, l'));
-}
-
 
 function weatherForecast(apiJson) {
   for (let index = 0; index < 6; index++) {
@@ -65,7 +55,7 @@ function weatherForecast(apiJson) {
 }
 
 function weatherCurrent(apiJson) {
-  $('.dateAndCityCurrent').text(`${cityAndState} (${moment().format('dddd, l')})`)
+  $('.dateAndCityCurrent').text(`${cityAndState} (${moment().format('dddd, L')})`)
   $('.dateAndCityCurrent').append(`<img class="iconCurrent" src="https://openweathermap.org/img/wn/${apiJson.current.weather[0].icon}@2x.png" alt="current weather icon">`)
   $('.tempCurrent').text(`${Math.round(apiJson.current.temp)} ℉`)
   $('.windCurrent').text(`${Math.round(apiJson.current.wind_speed)} MPH`)
@@ -84,11 +74,8 @@ function weatherCurrent(apiJson) {
     $('.uvIndexCurrent').removeClass('bg-warning')
     $('.uvIndexCurrent').addClass('bg-danger text-white rounded px-2 py-1 fw-bold')
   }
-
 }
 
-//ask in class!!!!!
-//=================
 $('.searchBtn').on('click', function (event) {
   console.log(event.target.innerText)
   var citySearched = event.target.innerText
@@ -120,7 +107,7 @@ function searchBlock() {
   }
 }
 
-function apiCityCall(citySearched){
+function apiCityCall(citySearched) {
   cityAndState = citySearched.split(", ")
   console.log(cityAndState)
   for (var i = 0; i < cityArrayWithLonLat.length; i++) {
@@ -129,9 +116,7 @@ function apiCityCall(citySearched){
       console.log(cityLonLat)
     }
   }
-
   var weatherUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${cityLonLat[0]}&lon=${cityLonLat[1]}&appid=0f6d8bac92fd58296cc45805a6e84234&units=imperial&exclude=minutely,hourly`;
-
   $.ajax({
     url: weatherUrl,
     method: 'GET',
@@ -139,7 +124,6 @@ function apiCityCall(citySearched){
     .then(function (response) { // runs if no error happens
       console.log('Ajax Reponse \n-------------');
       console.log(response);
-      weatherJson = response;   //might get rid of it later, but this makes the json glabal and accessible
       weatherCurrent(response);
       weatherForecast(response);
     })

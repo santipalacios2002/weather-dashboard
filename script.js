@@ -77,7 +77,6 @@ function weatherCurrent(apiJson) {
 }
 
 $('.searchBtn').on('click', function (event) {
-  console.log(event.target.innerText)
   var citySearched = event.target.innerText
   apiCityCall(citySearched);
 })
@@ -109,11 +108,9 @@ function searchBlock() {
 
 function apiCityCall(citySearched) {
   cityAndState = citySearched.split(", ")
-  console.log(cityAndState)
   for (var i = 0; i < cityArrayWithLonLat.length; i++) {
     if (cityAndState[0] === cityArrayWithLonLat[i].name && cityAndState[1] === cityArrayWithLonLat[i].state) {
       var cityLonLat = [cityArrayWithLonLat[i].lat, cityArrayWithLonLat[i].lon]
-      console.log(cityLonLat)
     }
   }
   var weatherUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${cityLonLat[0]}&lon=${cityLonLat[1]}&appid=0f6d8bac92fd58296cc45805a6e84234&units=imperial&exclude=minutely,hourly`;
@@ -122,8 +119,6 @@ function apiCityCall(citySearched) {
     method: 'GET',
   })
     .then(function (response) { // runs if no error happens
-      console.log('Ajax Reponse \n-------------');
-      console.log(response);
       weatherCurrent(response);
       weatherForecast(response);
     })

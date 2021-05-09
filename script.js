@@ -28,6 +28,7 @@ $('#submitBtn').on('click', function () {
   var citySearched = $('#tags').val(); //extracts the value from search
   apiCityCall(citySearched);
   saveSearch($('#tags').val());
+  $('#tags').val('');
   $('.search-block').prepend(`<button class="btn btn-secondary col mb-2 searchBtn">${citySearched}</button>`)
 
   $('.searchBtn').on('click', function (event) {
